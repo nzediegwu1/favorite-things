@@ -32,10 +32,8 @@ class Favourite(models.Model):
         validators=[MinLengthValidator(10, min_length('description', 10))])
     ranking = models.IntegerField()
     deleted = models.BooleanField(default=False)
-    # created_date should be generated upon creation but skipped upon update/delete
-    # add date validation to created_date
-    created_date = models.DateTimeField(null=True)
-    modified_date = models.DateTimeField(null=True, default=timezone.now)
+    created_date = models.DateTimeField(default=timezone.now, editable=False)
+    modified_date = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category,
                                  on_delete=models.CASCADE,
                                  related_name='favourites')
