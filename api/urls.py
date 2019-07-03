@@ -6,15 +6,13 @@ from .views import FavouriteViewSet, CategoryViewSet
 router = DefaultRouter()
 
 list_bindings = {'get': 'list', 'post': 'create'}
-single_bindings = {
-    'get': 'retrieve',
-    'put': 'update',
-    'patch': 'partial_update',
-    'delete': 'destroy'
-}
+single_bindings = {'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}
 
-favourite_list = FavouriteViewSet.as_view(list_bindings)
-single_favourite = FavouriteViewSet.as_view(single_bindings)
+favourite_list = FavouriteViewSet.as_view({'post': 'create'})
+single_favourite = FavouriteViewSet.as_view({
+    'put': 'update',
+    'delete': 'destroy'
+})
 
 category_list = CategoryViewSet.as_view(list_bindings)
 single_category = CategoryViewSet.as_view(single_bindings)

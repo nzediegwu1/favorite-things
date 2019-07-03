@@ -12,4 +12,4 @@ class FavouriteSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name', 'count')
+        fields = ('id', 'name', 'count', 'favourites')
