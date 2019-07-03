@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
@@ -32,16 +31,11 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
 
     def retrieve(self, request, pk, format=None):
-        category = Category.objects.filter(id=pk)
-        if not category:
-            raise Http404
-        category = category.prefetch_related(
-            Prefetch(
-                'favourites',
-                queryset=Favourite.objects.filter(deleted=False))).first()
+        category = get_object_or_404(Category, pk=pk)
+        favourites = category.favourites.filter(deleted=False)
         category_data = CategorySerializer(category).data
         favourite_data = FavouriteSerializer(
-            category.favourites,
+            favourites,
             many=True,
         ).data
         return Response({**category_data, 'favourites': favourite_data})
