@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, RegexValidator
 from django.utils import timezone
 
 
@@ -7,12 +7,18 @@ def min_length(field, length):
     return f'{field} should not be less than {length}'
 
 
+alphabet_only = RegexValidator(r'^[a-zA-Z \']*$',
+                               'Should contain only alphabets')
+
+
 class Category(models.Model):
     """
     Defines the properties of a Category.
     A category can have multiple favourites
     """
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=30,
+                            unique=True,
+                            validators=[alphabet_only])
 
     @property
     def count(self):
@@ -27,7 +33,7 @@ class Favourite(models.Model):
     Defines the porperties of a Favourite
     A Favourite belongs to one category
     """
-    title = models.CharField(max_length=60)
+    title = models.CharField(max_length=60, validators=[alphabet_only])
     description = models.TextField(
         validators=[MinLengthValidator(10, min_length('description', 10))])
     ranking = models.IntegerField()

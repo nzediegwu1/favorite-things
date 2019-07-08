@@ -1,10 +1,12 @@
+from copy import deepcopy
 from django.shortcuts import render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Prefetch
 from .models import Favourite, Category
-from .serializers import FavouriteSerializer, CategorySerializer
+from .serializers import (FavouriteSerializer, CategorySerializer,
+                          GetCategorySerializer)
 
 
 class FavouriteViewSet(ModelViewSet):
@@ -33,7 +35,7 @@ class CategoryViewSet(ModelViewSet):
     def retrieve(self, request, pk, format=None):
         category = get_object_or_404(Category, pk=pk)
         favourites = category.favourites.filter(deleted=False)
-        category_data = CategorySerializer(category).data
+        category_data = GetCategorySerializer(category).data
         favourite_data = FavouriteSerializer(
             favourites,
             many=True,
