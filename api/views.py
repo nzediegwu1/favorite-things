@@ -20,7 +20,7 @@ class FavouriteViewSet(ModelViewSet):
         return {
             'errors': {
                 'favourite': favourite.errors,
-                'metadata': metadata.errors
+                'metadata': metadata.errors if metadata else {}
             }
         }
 
@@ -46,11 +46,11 @@ class FavouriteViewSet(ModelViewSet):
         MetadataSerializer.Meta.fields = ('name', 'data_type', 'value')
         metadata_schema = MetadataSerializer(data=metadata,
                                              many=True) if metadata else None
-        if not favourite_schema.is_valid() or (metadata and
-                                               not metadata_schema.is_valid()):
-            return Response(self.validation_error(favourite_schema,
-                                                  metadata_schema),
-                            status=status.HTTP_400_BAD_REQUEST)
+        valid_favourite, valid_metadata = favourite_schema.is_valid(
+        ), metadata_schema.is_valid() if metadata else True
+        if not valid_favourite or not valid_metadata:
+            errors = self.validation_error(favourite_schema, metadata_schema)
+            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
         favourite = favourite_schema.save()
         if metadata:
             bulk_metadata = [
