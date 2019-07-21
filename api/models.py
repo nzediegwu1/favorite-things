@@ -46,3 +46,21 @@ class Favourite(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class MetaData(models.Model):
+    """
+    Defines the properties of Metadata associated to favourites
+    Each metadata belongs to a favourite, a favourite can have many metadata
+    """
+    DATA_TYPES = (('text', 'Text'), ('number', 'Number'), ('date', 'Date'),
+                  ('enum', 'Enum'))
+    name = models.CharField(max_length=30, validators=[alphabet_only])
+    data_type = models.CharField(max_length=10, choices=DATA_TYPES)
+    value = models.CharField(max_length=30)
+    favourite = models.ForeignKey(Favourite,
+                                  on_delete=models.CASCADE,
+                                  related_name='metadata')
+
+    def __str__(self):
+        return self.name
