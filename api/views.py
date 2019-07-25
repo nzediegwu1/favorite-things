@@ -64,7 +64,7 @@ class CategoryViewSet(ModelViewSet):
     """
     Handles CRUD for category resources
     """
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().order_by('-id')
     serializer_class = CategorySerializer
 
     def retrieve(self, request, pk, format=None):
