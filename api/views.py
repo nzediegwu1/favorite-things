@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Prefetch
 from .models import Favourite, Category, MetaData
+from .helpers import delete_and_return
 from .serializers import (FavouriteSerializer, CategorySerializer,
                           GetCategorySerializer, MetadataSerializer)
 
@@ -13,7 +14,7 @@ class FavouriteViewSet(ModelViewSet):
     """
     Handles CRUD operations for Favourite resourses
     """
-    queryset = Favourite.objects.all()
+    queryset = Favourite.objects.filter(deleted=False)
     serializer_class = FavouriteSerializer
 
     def validation_error(self, favourite, metadata):
@@ -25,10 +26,7 @@ class FavouriteViewSet(ModelViewSet):
         }
 
     def destroy(self, request, pk, format=None):
-        favourite = get_object_or_404(Favourite, pk=pk)
-        favourite.deleted = True
-        favourite.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return delete_and_return(Favourite, pk)
 
     def retrieve(self, request, pk, format=None):
         metadata = MetaData.objects.filter(favourite=pk)
@@ -64,8 +62,11 @@ class CategoryViewSet(ModelViewSet):
     """
     Handles CRUD for category resources
     """
-    queryset = Category.objects.all().order_by('-id')
+    queryset = Category.objects.filter(deleted=False).order_by('-id')
     serializer_class = CategorySerializer
+
+    def destroy(self, request, pk, format=None):
+        return delete_and_return(Category, pk)
 
     def retrieve(self, request, pk, format=None):
         category = get_object_or_404(Category, pk=pk)

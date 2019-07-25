@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import get_object_or_404
 from django.core.validators import MinLengthValidator, RegexValidator
 from django.utils import timezone
 
@@ -11,7 +12,23 @@ alphabet_only = RegexValidator(r'^[a-zA-Z \']*$',
                                'Should contain only alphabets')
 
 
-class Category(models.Model):
+class BaseModel():
+    @classmethod
+    def soft_delete(cls, pk):
+        """Soft-deletes a record in database
+
+        Args:
+            model(cls): model of the entity to delete 
+            pk(number): id of the record to delete
+        Returns:
+            None
+        """
+        item = get_object_or_404(cls, pk=pk, deleted=False)
+        item.deleted = True
+        item.save()
+
+
+class Category(models.Model, BaseModel):
     """
     Defines the properties of a Category.
     A category can have multiple favourites
@@ -19,6 +36,7 @@ class Category(models.Model):
     name = models.CharField(max_length=30,
                             unique=True,
                             validators=[alphabet_only])
+    deleted = models.BooleanField(default=False)
 
     @property
     def count(self):
@@ -28,7 +46,7 @@ class Category(models.Model):
         return self.name
 
 
-class Favourite(models.Model):
+class Favourite(models.Model, BaseModel):
     """
     Defines the porperties of a Favourite
     A Favourite belongs to one category
