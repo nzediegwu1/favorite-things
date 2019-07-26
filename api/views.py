@@ -65,7 +65,8 @@ class CategoryViewSet(ModelViewSet):
 
     def retrieve(self, request, pk, format=None):
         category = get_object_or_404(Category, pk=pk)
-        favourites = category.favourites.filter(deleted=False)
+        favourites = category.favourites.filter(
+            deleted=False).order_by('-modified_date')
         category_data = GetCategorySerializer(category).data
         favourite_data = FavouriteMetaSerializer(
             favourites,
