@@ -15,14 +15,10 @@ category_list = CategoryViewSet.as_view(list_bindings)
 single_category = CategoryViewSet.as_view(single_bindings)
 delete_metadata = MetadataViewSet.as_view({'delete': 'destroy'})
 create_metadata = MetadataViewSet.as_view({'post': 'create'})
-single_favourite_metadata = FavouriteViewSet.as_view({'get': 'retrieve'})
 
 urlpatterns = format_suffix_patterns([
     path('favourites', create_favourite, name='create-favourite'),
     path('favourites/<int:pk>', single_favourite, name='single-favourite'),
-    path('favourites/<int:pk>/metadata',
-         single_favourite_metadata,
-         name='single-favourite-metadata'),
     path('categories', category_list, name='category-list'),
     path('categories/<int:pk>', single_category, name='single-category'),
     path('metadata/<int:pk>', delete_metadata, name='delete-metadata'),

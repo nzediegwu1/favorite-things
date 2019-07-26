@@ -75,7 +75,7 @@ class MetaData(models.Model):
                   ('enum', 'Enum'))
     name = models.CharField(max_length=30, validators=[alphabet_only])
     data_type = models.CharField(max_length=10, choices=DATA_TYPES)
-    value = models.CharField(max_length=30)
+    value = models.CharField(max_length=100)
     favourite = models.ForeignKey(Favourite,
                                   on_delete=models.CASCADE,
                                   related_name='metadata')

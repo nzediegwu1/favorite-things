@@ -6,8 +6,9 @@ from rest_framework import status
 from django.db.models import Prefetch
 from .models import Favourite, Category, MetaData
 from .helpers import delete_and_return
-from .serializers import (FavouriteSerializer, CategorySerializer,
-                          GetCategorySerializer, MetadataSerializer)
+from .serializers import (FavouriteSerializer, FavouriteMetaSerializer,
+                          CategorySerializer, GetCategorySerializer,
+                          MetadataSerializer)
 
 
 class FavouriteViewSet(ModelViewSet):
@@ -27,12 +28,6 @@ class FavouriteViewSet(ModelViewSet):
 
     def destroy(self, request, pk, format=None):
         return delete_and_return(Favourite, pk)
-
-    def retrieve(self, request, pk, format=None):
-        metadata = MetaData.objects.filter(favourite=pk)
-        json_metadata = MetadataSerializer(metadata, many=True).data
-        message = f'successfully fetched metadata for favourite {pk}'
-        return Response({'message': message, 'data': json_metadata})
 
     def meta_object(self, metadata, favourite):
         metadata['favourite'] = favourite
@@ -72,7 +67,7 @@ class CategoryViewSet(ModelViewSet):
         category = get_object_or_404(Category, pk=pk)
         favourites = category.favourites.filter(deleted=False)
         category_data = GetCategorySerializer(category).data
-        favourite_data = FavouriteSerializer(
+        favourite_data = FavouriteMetaSerializer(
             favourites,
             many=True,
         ).data
