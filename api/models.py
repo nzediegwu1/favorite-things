@@ -1,15 +1,11 @@
 from django.db import models
 from django.shortcuts import get_object_or_404
-from django.core.validators import MinLengthValidator, RegexValidator
+from django.core.validators import MinLengthValidator
 from django.utils import timezone
 
 
 def min_length(field, length):
     return f'{field} should not be less than {length}'
-
-
-alphabet_only = RegexValidator(r'^[a-zA-Z \']*$',
-                               'Should contain only alphabets')
 
 
 class BaseModel():
@@ -33,9 +29,10 @@ class Category(models.Model, BaseModel):
     Defines the properties of a Category.
     A category can have multiple favourites
     """
-    name = models.CharField(max_length=30,
-                            unique=True,
-                            validators=[alphabet_only])
+    name = models.CharField(
+        max_length=30,
+        unique=True,
+    )
     deleted = models.BooleanField(default=False)
 
     @property
@@ -51,7 +48,7 @@ class Favourite(models.Model, BaseModel):
     Defines the porperties of a Favourite
     A Favourite belongs to one category
     """
-    title = models.CharField(max_length=60, validators=[alphabet_only])
+    title = models.CharField(max_length=60)
     description = models.TextField(
         validators=[MinLengthValidator(10, min_length('description', 10))])
     ranking = models.IntegerField()
@@ -73,7 +70,7 @@ class MetaData(models.Model):
     """
     DATA_TYPES = (('text', 'Text'), ('number', 'Number'), ('date', 'Date'),
                   ('enum', 'Enum'))
-    name = models.CharField(max_length=30, validators=[alphabet_only])
+    name = models.CharField(max_length=30)
     data_type = models.CharField(max_length=10, choices=DATA_TYPES)
     value = models.CharField(max_length=100)
     favourite = models.ForeignKey(Favourite,

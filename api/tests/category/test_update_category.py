@@ -17,12 +17,12 @@ class TestUpdateCategory(APITestCase):
         self.assertEqual(response.data['name'], update_data['name'])
 
     def test_update_category_fails_with_invalid_input(self):
-        update_data = {'name': '90987sjfksdfsdf'}
+        update_data = {'name': []}
         url = f'/categories/{self.category_id}'
         response = self.client.put(url, data=update_data, format='json')
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data['name'][0],
-                         'Should contain only alphabets')
+                         'Not a valid string.')
 
     def test_update_category_fails_with_unexisting_id(self):
         update_data = {'name': 'Books'}

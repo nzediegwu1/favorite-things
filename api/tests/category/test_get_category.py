@@ -34,7 +34,6 @@ class TestGetCategory(APITestCase):
         self.assertTrue('favourites' in response.data)
         self.assertIsInstance(response.data['favourites'], list)
         self.assertEqual(response.data['favourites'][0]['title'], 'anthony')
-        self.assertTrue('created_date' in response.data['favourites'][0])
 
     def test_get_single_category_fails_with_unexistin_id(self):
         response = self.client.get('/categories/2000')

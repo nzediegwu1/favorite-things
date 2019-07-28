@@ -29,6 +29,15 @@ def jellof_rice(category_id):
     }
 
 
+def jellof_rice_update(category_id):
+    return {
+        'title': 'Jellof rice',
+        'description': 'Greatest rice delicacy of all time',
+        'ranking': 1,
+        'category': category_id
+    }
+
+
 def spaghetti(category_id):
     return {
         'title': 'Spaghetti',
@@ -39,11 +48,30 @@ def spaghetti(category_id):
 
 
 invalid_favourite = {
-    'title': '90987sjfksdfsdf',
+    'title':
+    '90987sjfksdfsdf shdjkfhsjkdfjksdf shdjfkhsjfksdf hjskdhfjksdf hsjdkfhjsdkf hjskshdjfksdfsdf hjskdhfjksdfg ',
     'description': [],
     'ranking': 'invalid-ranking',
     'category': 'invalid-category',
     'metadata': 'invali-metadata'
 }
 
-invalid_metadata = [{'name': 2342, 'data_type': 'stuff', 'value': {}}]
+invalid_metadata = [{'name': [], 'data_type': 'stuff', 'value': {}}]
+
+
+def color_metadata(favourite_id):
+    return {
+        'favourite': favourite_id,
+        'name': 'color',
+        'value': 'red',
+        'data_type': 'text'
+    }
+
+
+invalie_metadata_2 = {
+    "name":
+    "extra sdfljksdfsdf sdfkjsdkfsdf sdfsdfsdf sfsdfsdf sdfsfsf ingredients",
+    "data_type": "wonderful",
+    "value": [],
+    "favourite": {}
+}

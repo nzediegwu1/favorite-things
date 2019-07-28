@@ -78,3 +78,15 @@ class CategoryViewSet(ModelViewSet):
 class MetadataViewSet(ModelViewSet):
     queryset = MetaData.objects.all()
     serializer_class = MetadataSerializer
+
+    def create(self, request, format=None):
+        metadata_schema = MetadataSerializer(data=request.data)
+        valid_metadata = metadata_schema.is_valid()
+        if not valid_metadata:
+            return Response(metadata_schema.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+        favourite = Favourite.objects.get(pk=request.data['favourite'])
+        request.data['favourite'] = favourite
+        metadata = MetaData.objects.create(**request.data)
+        return Response(MetadataSerializer(metadata).data,
+                        status=status.HTTP_201_CREATED)
