@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.shortcuts import get_object_or_404
 from django.core.validators import MinLengthValidator
 from django.utils import timezone
@@ -76,6 +77,21 @@ class MetaData(models.Model):
     favourite = models.ForeignKey(Favourite,
                                   on_delete=models.CASCADE,
                                   related_name='metadata')
+
+    def __str__(self):
+        return self.name
+
+
+class AuditLog(models.Model):
+    """
+    Defines the properties of audit log for both category and favourite records
+    A category can have several audit logs, A favourite can have several audit logs
+    An audit log can belong to only one Favourite or one Category
+    """
+    action = models.CharField(max_length=10)
+    date = models.DateTimeField(default=timezone.now)
+    old = JSONField()
+    new = JSONField()
 
     def __str__(self):
         return self.name
