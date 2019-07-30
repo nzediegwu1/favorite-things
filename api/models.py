@@ -84,14 +84,23 @@ class MetaData(models.Model):
 
 class AuditLog(models.Model):
     """
-    Defines the properties of audit log for both category and favourite records
+    Defines the properties of audit log for both favourite and category records
     A category can have several audit logs, A favourite can have several audit logs
-    An audit log can belong to only one Favourite or one Category
+    An audit log can belong to only one Favourite or Category (resource)
     """
-    action = models.CharField(max_length=10)
+    ACTION_TYPES = (
+        ('create', 'Create'),
+        ('update', 'Update'),
+        ('delete', 'Delete'),
+    )
+    MODEL_TYPES = (('category', 'Category'), ('favourite', 'Favourite'))
+
+    model = models.CharField(max_length=10, choices=MODEL_TYPES)
+    action = models.CharField(max_length=10, choices=ACTION_TYPES)
     date = models.DateTimeField(default=timezone.now)
     old = JSONField()
     new = JSONField()
+    resource_id = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return self.action

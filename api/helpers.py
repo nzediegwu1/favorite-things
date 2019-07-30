@@ -13,3 +13,15 @@ def delete_and_return(model, pk):
     """
     model.soft_delete(pk)
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+def list_get(array, index):
+    """Retrieve an item in list or returns None if index is out of range
+
+    Args:
+        array(list): the list whose item is to be retrieved
+        index(number): the index of the item to retrieve
+    Returns:
+        any: item retrieved from the array
+    """
+    return array[index] if len(array) > index else None
