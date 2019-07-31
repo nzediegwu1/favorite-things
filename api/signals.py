@@ -33,35 +33,33 @@ def favourite_pre_save(sender, instance, *args, **kwargs):
             'new': new,
             'resource_id': favourite_id
         }
-        AuditLog.objects.create(**log)
+        return AuditLog.objects.create(**log)
 
-    if instance.id:  #update/soft-delete
-        if instance.deleted:
-            update = FavouriteSerializer(instance).data
-            update['category'] = instance.category.name
-            log = {
-                'model': 'favourite',
-                'action': 'delete',
-                'date': timezone.now(),
-                'old': update,
-                'new': {},
-                'resource_id': instance.id
-            }
-            AuditLog.objects.create(**log)
-        else:
-            update = FavouriteSerializer(instance).data
-            update['category'] = instance.category.name
-            old = FavouriteSerializer(
-                Favourite.objects.get(pk=instance.id)).data
-            log = {
-                'model': 'favourite',
-                'action': 'update',
-                'date': timezone.now(),
-                'old': old,
-                'new': update,
-                'resource_id': instance.id
-            }
-            AuditLog.objects.create(**log)
+    if instance.deleted:
+        update = FavouriteSerializer(instance).data
+        update['category'] = instance.category.name
+        log = {
+            'model': 'favourite',
+            'action': 'delete',
+            'date': timezone.now(),
+            'old': update,
+            'new': {},
+            'resource_id': instance.id
+        }
+        return AuditLog.objects.create(**log)
+
+    update = FavouriteSerializer(instance).data
+    update['category'] = instance.category.name
+    old = FavouriteSerializer(Favourite.objects.get(pk=instance.id)).data
+    log = {
+        'model': 'favourite',
+        'action': 'update',
+        'date': timezone.now(),
+        'old': old,
+        'new': update,
+        'resource_id': instance.id
+    }
+    AuditLog.objects.create(**log)
 
 
 @receiver(pre_save, sender=Category)
@@ -78,29 +76,28 @@ def category_pre_save(sender, instance, *args, **kwargs):
             'new': new,
             'resource_id': category_id
         }
-        AuditLog.objects.create(**log)
+        return AuditLog.objects.create(**log)
 
-    if instance.id:  #update/soft-delete
-        if instance.deleted:
-            update = CategorySerializer(instance).data
-            log = {
-                'model': 'category',
-                'action': 'delete',
-                'date': timezone.now(),
-                'old': update,
-                'new': {},
-                'resource_id': instance.id
-            }
-            AuditLog.objects.create(**log)
-        else:
-            update = CategorySerializer(instance).data
-            old = CategorySerializer(Category.objects.get(pk=instance.id)).data
-            log = {
-                'model': 'favourite',
-                'action': 'update',
-                'date': timezone.now(),
-                'old': old,
-                'new': update,
-                'resource_id': instance.id
-            }
-            AuditLog.objects.create(**log)
+    if instance.deleted:
+        update = CategorySerializer(instance).data
+        log = {
+            'model': 'category',
+            'action': 'delete',
+            'date': timezone.now(),
+            'old': update,
+            'new': {},
+            'resource_id': instance.id
+        }
+        return AuditLog.objects.create(**log)
+
+    update = CategorySerializer(instance).data
+    old = CategorySerializer(Category.objects.get(pk=instance.id)).data
+    log = {
+        'model': 'favourite',
+        'action': 'update',
+        'date': timezone.now(),
+        'old': old,
+        'new': update,
+        'resource_id': instance.id
+    }
+    AuditLog.objects.create(**log)

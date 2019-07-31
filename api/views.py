@@ -3,12 +3,13 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
 from django.db.models import Prefetch
-from .models import Favourite, Category, MetaData
+from .models import Favourite, Category, MetaData, AuditLog
 from .helpers import delete_and_return
 from .serializers import (FavouriteSerializer, FavouriteMetaSerializer,
                           CategorySerializer, GetCategorySerializer,
-                          MetadataSerializer)
+                          MetadataSerializer, AuditLogSerializer)
 
 
 class FavouriteViewSet(ModelViewSet):
@@ -90,3 +91,19 @@ class MetadataViewSet(ModelViewSet):
         metadata = MetaData.objects.create(**request.data)
         return Response(MetadataSerializer(metadata).data,
                         status=status.HTTP_201_CREATED)
+
+
+class FavouriteAuditLog(APIView):
+    def get(self, request, favourite_id, format=None):
+        logs = AuditLog.objects.filter(model='favourite',
+                                       resource_id=favourite_id)
+        return Response(AuditLogSerializer(logs, many=True).data,
+                        status=status.HTTP_200_OK)
+
+
+class CategoryAuditLog(APIView):
+    def get(self, request, category_id, format=None):
+        logs = AuditLog.objects.filter(model='category',
+                                       resource_id=category_id)
+        return Response(AuditLogSerializer(logs, many=True).data,
+                        status=status.HTTP_200_OK)

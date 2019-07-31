@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Favourite, Category, MetaData
+from .models import Favourite, Category, MetaData, AuditLog
 
 
 class FavouriteSerializer(serializers.ModelSerializer):
@@ -34,3 +34,9 @@ class GetCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'name', 'count', 'favourites')
+
+
+class AuditLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuditLog
+        fields = ('id', 'model', 'action', 'date', 'old', 'new', 'resource_id')
