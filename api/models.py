@@ -98,8 +98,8 @@ class AuditLog(models.Model):
     model = models.CharField(max_length=10, choices=MODEL_TYPES)
     action = models.CharField(max_length=10, choices=ACTION_TYPES)
     date = models.DateTimeField(default=timezone.now)
-    old = JSONField()
-    new = JSONField()
+    before = JSONField()
+    after = JSONField()
     resource_id = models.IntegerField()
 
     def __str__(self):

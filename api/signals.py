@@ -27,8 +27,8 @@ def favourite_pre_save(sender, instance, *args, **kwargs):
                 'model': 'favourite',
                 'action': 'delete',
                 'date': timezone.now(),
-                'old': update,
-                'new': {},
+                'before': update,
+                'after': {},
                 'resource_id': instance.id
             }
             return AuditLog.objects.create(**log)
@@ -40,8 +40,8 @@ def favourite_pre_save(sender, instance, *args, **kwargs):
             'model': 'favourite',
             'action': 'update',
             'date': timezone.now(),
-            'old': old,
-            'new': update,
+            'before': old,
+            'after': update,
             'resource_id': instance.id
         }
         AuditLog.objects.create(**log)
@@ -56,8 +56,8 @@ def favourite_post_save(sender, instance, created, **kwargs):
             'model': 'favourite',
             'action': 'create',
             'date': instance.created_date,
-            'old': {},
-            'new': new,
+            'before': {},
+            'after': new,
             'resource_id': instance.id
         }
         return AuditLog.objects.create(**log)
@@ -72,8 +72,8 @@ def category_pre_save(sender, instance, *args, **kwargs):
                 'model': 'category',
                 'action': 'delete',
                 'date': timezone.now(),
-                'old': update,
-                'new': {},
+                'before': update,
+                'after': {},
                 'resource_id': instance.id
             }
             return AuditLog.objects.create(**log)
@@ -84,8 +84,8 @@ def category_pre_save(sender, instance, *args, **kwargs):
             'model': 'category',
             'action': 'update',
             'date': timezone.now(),
-            'old': old,
-            'new': update,
+            'before': old,
+            'after': update,
             'resource_id': instance.id
         }
         AuditLog.objects.create(**log)
@@ -99,8 +99,8 @@ def category_post_save(sender, instance, created, **kwargs):
             'model': 'category',
             'action': 'create',
             'date': timezone.now(),
-            'old': {},
-            'new': new,
+            'before': {},
+            'after': new,
             'resource_id': instance.id
         }
         return AuditLog.objects.create(**log)

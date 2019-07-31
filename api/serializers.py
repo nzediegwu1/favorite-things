@@ -39,4 +39,5 @@ class GetCategorySerializer(serializers.ModelSerializer):
 class AuditLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuditLog
-        fields = ('id', 'model', 'action', 'date', 'old', 'new', 'resource_id')
+        fields = ('id', 'model', 'action', 'date', 'before', 'after',
+                  'resource_id')
