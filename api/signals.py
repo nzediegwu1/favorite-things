@@ -1,106 +1,54 @@
 from django.db.models.signals import pre_save, post_save
-from django.db import connection
 from django.dispatch import receiver
-from django.utils import timezone
-from .models import Favourite, Category, AuditLog
-from .queries import conditionally_increment_ranking
+from .models import Favourite, Category
 from .serializers import FavouriteSerializer, CategorySerializer
+from .helpers import log_data, conditionally_reorder_ranking
 
 
 @receiver(pre_save, sender=Favourite)
 def favourite_pre_save(sender, instance, *args, **kwargs):
-    same_ranking = Favourite.objects.filter(
-        ranking=instance.ranking,
-        category=instance.category,
-        deleted=False,
-    ).exclude(id=instance.id)
-    if same_ranking:
-        from_ranking = instance.ranking - 1
-        with connection.cursor() as cursor:
-            cursor.execute(conditionally_increment_ranking,
-                           [from_ranking, instance.category.id, False])
-    if instance.id:  # update or soft-delete
-        if instance.deleted:
-            update = FavouriteSerializer(instance).data
-            update['category'] = instance.category.name
-            log = {
-                'model': 'favourite',
-                'action': 'delete',
-                'date': timezone.now(),
-                'before': update,
-                'after': {},
-                'resource_id': instance.id
-            }
-            return AuditLog.objects.create(**log)
+    conditionally_reorder_ranking(instance)
 
-        update = FavouriteSerializer(instance).data
-        update['category'] = instance.category.name
-        old = FavouriteSerializer(Favourite.objects.get(pk=instance.id)).data
-        log = {
-            'model': 'favourite',
-            'action': 'update',
-            'date': timezone.now(),
-            'before': old,
-            'after': update,
-            'resource_id': instance.id
-        }
-        AuditLog.objects.create(**log)
+    # create audit logs for favourite delete and update signals
+    if instance.id:
+        if instance.deleted:
+            old_data = FavouriteSerializer(instance).data
+            old_data['category'] = instance.category.name
+            return log_data('favourite', 'delete', old_data, {}, instance)
+
+        old_data = FavouriteSerializer(instance).data
+        old_data['category'] = instance.category.name
+        old_favourite = Favourite.objects.get(pk=instance.id)
+        old_data = FavouriteSerializer(old_favourite).data
+        old_data['category'] = old_favourite.category.name
+        return log_data('favourite', 'update', old_data, old_data, instance)
 
 
 @receiver(post_save, sender=Favourite)
 def favourite_post_save(sender, instance, created, **kwargs):
+    # create audit logs for favourite-creation signals
     if created:
         new = FavouriteSerializer(instance).data
         new['category'] = instance.category.name
-        log = {
-            'model': 'favourite',
-            'action': 'create',
-            'date': instance.created_date,
-            'before': {},
-            'after': new,
-            'resource_id': instance.id
-        }
-        return AuditLog.objects.create(**log)
+        return log_data('favourite', 'create', {}, new, instance)
 
 
 @receiver(pre_save, sender=Category)
 def category_pre_save(sender, instance, *args, **kwargs):
-    if instance.id:  # update or soft-delete
+    # create audit logs for category delete and update signals
+    if instance.id:
         if instance.deleted:
             update = CategorySerializer(instance).data
-            log = {
-                'model': 'category',
-                'action': 'delete',
-                'date': timezone.now(),
-                'before': update,
-                'after': {},
-                'resource_id': instance.id
-            }
-            return AuditLog.objects.create(**log)
+            return log_data('category', 'delete', update, {}, instance)
 
         update = CategorySerializer(instance).data
         old = CategorySerializer(Category.objects.get(pk=instance.id)).data
-        log = {
-            'model': 'category',
-            'action': 'update',
-            'date': timezone.now(),
-            'before': old,
-            'after': update,
-            'resource_id': instance.id
-        }
-        AuditLog.objects.create(**log)
+        return log_data('category', 'update', old, update, instance)
 
 
 @receiver(post_save, sender=Category)
 def category_post_save(sender, instance, created, **kwargs):
+    # create audit logs for categiory-creation signals
     if created:
         new = CategorySerializer(instance).data
-        log = {
-            'model': 'category',
-            'action': 'create',
-            'date': timezone.now(),
-            'before': {},
-            'after': new,
-            'resource_id': instance.id
-        }
-        return AuditLog.objects.create(**log)
+        return log_data('category', 'create', {}, new, instance)

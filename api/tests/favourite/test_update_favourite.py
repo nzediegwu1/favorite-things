@@ -47,6 +47,8 @@ class TestUpdateFavourite(APITestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data['title'][0],
                          'Ensure this field has no more than 60 characters.')
+        self.assertEqual(response.data['category'][0],
+                         'Incorrect type. Expected pk value, received str.')
         self.assertEqual(response.data['description'][0],
                          'description should not be less than 10')
         self.assertEqual(response.data['ranking'][0],
