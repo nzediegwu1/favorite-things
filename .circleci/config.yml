@@ -1,0 +1,36 @@
+# Python CircleCI 2.0 configuration file
+version: 2
+python: &python
+  docker:
+    - image: circleci/python:3.7
+      environment:
+        COVERALLS_REPO_TOKEN: "${COVERALLS_REPO_TOKEN}"
+
+  working_directory: ~/repo
+jobs:
+  build:
+    <<: *python
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Install dependencies
+          command: |
+            sudo pip install pipenv
+            pipenv install --dev
+      - run:
+          name: Set up database
+          command: |
+            source $(python3 -m pipenv --venv)/bin/activate
+            python manage.py migrate
+      - run:
+          name: Run tests and upload coverage
+          command: |
+            source $(python3 -m pipenv --venv)/bin/activate
+            coverage run --source api manage.py test
+            coverage report
+            coveralls
+      - store_artifacts:
+          path: coverage
+          prefix: coverage

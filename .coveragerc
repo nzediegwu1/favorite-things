@@ -1,0 +1,5 @@
+[run]
+omit =
+    # omit everything in the following directories
+    api/migrations/*
+    api/tests/*
