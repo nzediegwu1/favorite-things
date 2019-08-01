@@ -75,3 +75,21 @@ invalie_metadata_2 = {
     "value": [],
     "favourite": {}
 }
+
+
+def brite_core(category):
+    return {
+        'title': 'Brite Core',
+        'description': 'Best company',
+        'ranking': 3,
+        'category': category
+    }
+
+
+def brite_core_update(category):
+    return {
+        'title': 'BriteCore',
+        'description': 'Best company for insurance softwares',
+        'ranking': 10,
+        'category': category
+    }

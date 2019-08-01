@@ -1,6 +1,4 @@
 from rest_framework.test import APITestCase
-from api.models import Category, AuditLog
-from api.serializers import CategorySerializer
 
 
 class TestGetCategoryAuditLog(APITestCase):
