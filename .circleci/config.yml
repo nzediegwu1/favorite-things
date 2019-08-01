@@ -3,6 +3,8 @@ version: 2
 python: &python
   docker:
     - image: circleci/python:3.7
+    - image: postgres:10-alpine
+
       environment:
         COVERALLS_REPO_TOKEN: "${COVERALLS_REPO_TOKEN}"
 
