@@ -5,11 +5,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from django.db.models import Prefetch
-from .models import Favourite, Category, MetaData, AuditLog
-from .helpers import delete_and_return
+from .models import Favourite, Category, MetaData
+from .helpers import delete_and_return, get_audit_log
 from .serializers import (FavouriteSerializer, FavouriteMetaSerializer,
                           CategorySerializer, GetCategorySerializer,
-                          MetadataSerializer, AuditLogSerializer)
+                          MetadataSerializer)
 
 
 class FavouriteViewSet(ModelViewSet):
@@ -95,19 +95,9 @@ class MetadataViewSet(ModelViewSet):
 
 class FavouriteAuditLog(APIView):
     def get(self, request, favourite_id, format=None):
-        logs = AuditLog.objects.filter(
-            model='favourite', resource_id=favourite_id).order_by('-id')
-        log_data = AuditLogSerializer(logs, many=True).data
-        favoryt = Favourite.objects.get(pk=favourite_id)
-        response = {'message': f'{favoryt.title}-Audit log', 'data': log_data}
-        return Response(response, status=status.HTTP_200_OK)
+        return get_audit_log(Favourite, favourite_id, 'favourite')
 
 
 class CategoryAuditLog(APIView):
     def get(self, request, category_id, format=None):
-        logs = AuditLog.objects.filter(model='category',
-                                       resource_id=category_id).order_by('-id')
-        log_data = AuditLogSerializer(logs, many=True).data
-        category = Category.objects.get(pk=category_id)
-        response = {'message': f'{category.name}-Audit log', 'data': log_data}
-        return Response(response, status=status.HTTP_200_OK)
+        return get_audit_log(Category, category_id, 'category')

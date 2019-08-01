@@ -2,7 +2,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
 from django.db import connection
+from rest_framework.exceptions import NotFound
 from .models import AuditLog, Favourite
+from .serializers import AuditLogSerializer
 from .queries import conditionally_increment_ranking
 
 
@@ -60,3 +62,42 @@ def conditionally_reorder_ranking(instance):
         with connection.cursor() as cursor:
             cursor.execute(conditionally_increment_ranking,
                            [from_ranking, instance.category.id, False])
+
+
+def custom_get_or_404(model, pk, message):
+    """Get a record or return 404 http response with custom message
+
+    Args:
+        model(cls): django class representing the database table to query
+        pk(int): the primary key of the resource to find
+        message(str): the error message to use in the 404 response
+    Returns:
+        object: instance of the record retrieved
+    """
+    try:
+        return model.objects.get(pk=pk)
+    except model.DoesNotExist:
+        raise NotFound(message, 404)
+
+
+def get_audit_log(model, pk, model_key):
+    """Retrieves audit-log for a given resource or raise 404 error
+
+    Args:
+        model(cls): django class representing the database table to query
+        pk(int): the primary key of the resource to retrieve audit-log for
+        model_key(str): string key representing the resource type. eg: category or favourite
+
+    Returns
+        object: http response with audit-log data and 200 status code
+    
+    Raises:
+        exception: which resolves to 404 http response if the target resource does not exist
+    """
+    custom_get_or_404(model, pk, f"{model_key} with pk {pk}, does not exist")
+    logs = AuditLog.objects.filter(model=model_key,
+                                   resource_id=pk).order_by('-id')
+    log_data = AuditLogSerializer(logs, many=True).data
+    instance = model.objects.get(pk=pk)
+    response = {'message': f'{instance.__str__()}-Audit Log', 'data': log_data}
+    return Response(response, status=status.HTTP_200_OK)
