@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+USERNAME = os.getenv('DB_USER')
+PASSWORD = os.getenv('DB_PASS')
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -75,8 +78,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'favourite_things',
-        'USER': 'admin',
-        'PASSWORD': 'password',
+        'USER': USERNAME,
+        'PASSWORD': USERNAME,
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }
