@@ -16,12 +16,12 @@ def favourite_pre_save(sender, instance, *args, **kwargs):
             old_data['category'] = instance.category.name
             return log_data('favourite', 'delete', old_data, {}, instance)
 
-        old_data = FavouriteSerializer(instance).data
-        old_data['category'] = instance.category.name
+        new_data = FavouriteSerializer(instance).data
+        new_data['category'] = instance.category.name
         old_favourite = Favourite.objects.get(pk=instance.id)
         old_data = FavouriteSerializer(old_favourite).data
         old_data['category'] = old_favourite.category.name
-        return log_data('favourite', 'update', old_data, old_data, instance)
+        return log_data('favourite', 'update', old_data, new_data, instance)
 
 
 @receiver(post_save, sender=Favourite)
