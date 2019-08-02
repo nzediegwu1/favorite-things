@@ -10,11 +10,10 @@ A full stack web an application that allows the user to track their favorite thi
 
     1. Features
     2. Technologies
-    3. Installation and Setup
-    4. Entity relationship diagram
-    5. Documentation
-    6. Further improvement
-    7. How To Contribute
+    3. Entity relationship diagram
+    4. Installation and Setup
+    5. Suggested improvement
+    6. How To Contribute
 
 ## Features
   #### Users can perform the following actions with this application
@@ -44,8 +43,8 @@ A full stack web an application that allows the user to track their favorite thi
     5. Postman for testing API endpoints and documentation
 
 
-
-
+## Entity relationship diagram
+![](/entity-diagram.png)
 ## Installation and Setup
  
  ### Development
@@ -63,14 +62,7 @@ A full stack web an application that allows the user to track their favorite thi
     Go to http://localhost:8000 on your browser to view app
 
 
-## Documentation
-
-* The API was documented using postman.
-1. To view on Postman: [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/748bfdae01b196cbf17c)
-2. Online Documentation: [Click here](https://documenter.getpostman.com/view/4912237/SVSHrVC3?version=latest)
-
-
-## Further improvement
+## Suggested improvement
     - Implement recycle bin for deleted favourites/categories
     - Implement functionality to restore deleted favourites/categories from recycle bin
     - Implement pagination when retrieving favorites
