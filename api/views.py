@@ -86,7 +86,8 @@ class MetadataViewSet(ModelViewSet):
         if not valid_metadata:
             return Response(metadata_schema.errors,
                             status=status.HTTP_400_BAD_REQUEST)
-        favourite = Favourite.objects.get(pk=request.data['favourite'])
+
+        favourite = get_object_or_404(Favourite, pk=request.data['favourite'])
         request.data['favourite'] = favourite
         metadata = MetaData.objects.create(**request.data)
         return Response(MetadataSerializer(metadata).data,

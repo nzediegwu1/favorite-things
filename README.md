@@ -1,10 +1,10 @@
 # Favourite-things
-[![Maintainability](https://api.codeclimate.com/v1/badges/95b0d3c5a1019ec14339/maintainability)](https://codeclimate.com/github/nzediegwu1/favorite-things/maintainability)  [![Coverage Status](https://coveralls.io/repos/github/nzediegwu1/favorite-things/badge.svg?branch=master)](https://coveralls.io/github/nzediegwu1/favorite-things?branch=master)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/95b0d3c5a1019ec14339/maintainability)](https://codeclimate.com/github/nzediegwu1/favorite-things/maintainability) [![Coverage Status](https://coveralls.io/repos/github/nzediegwu1/favorite-things/badge.svg?branch=master)](https://coveralls.io/github/nzediegwu1/favorite-things?branch=master)
 
 A full stack web an application that allows the user to track their favorite things.
-- Frontend Repo: [Click here](https://github.com/nzediegwu1/favorite-things-ui)
 
+- Frontend Repo: [Click here](https://github.com/nzediegwu1/favorite-things-ui)
 
 ## Table of Contents
 
@@ -13,11 +13,13 @@ A full stack web an application that allows the user to track their favorite thi
     3. Entity relationship diagram
     4. Installation and Setup
     5. Suggested improvement
-    6. How To Contribute
+    6. Documentation
+    7. How To Contribute
 
 ## Features
-  #### Users can perform the following actions with this application
-    
+
+#### Users can perform the following actions with this application
+
       - Create a Category for saving favourite things
       - Edit a category
       - Delete a category (Soft-delete)
@@ -32,9 +34,9 @@ A full stack web an application that allows the user to track their favorite thi
       - View Audit-logs for mutations (create, update, delete) to a Favourite thing
       - Veiw Audit-logs  for mutations (create, update, delete) to a Category
       - Search for Favourite things under a selected Category
-  
-  
+
 ## Technologies
+
     1. Python 3.7
     2. Django and Django REST Framework
     3. Postgres database
@@ -42,12 +44,14 @@ A full stack web an application that allows the user to track their favorite thi
     5. coverage and coveralls for reporting test coverage
     5. Postman for testing API endpoints and documentation
 
-
 ## Entity relationship diagram
+
 ![](/entity-diagram.png)
+
 ## Installation and Setup
- 
- ### Development
+
+### Development
+
     1. Install Python 3.7, pipenv and Postgres SQL
     2. Clone this repo: "git clone https://github.com/nzediegwu1/favorite-things.git"
     3. Create virtual environment: `pipenv shell`
@@ -57,12 +61,18 @@ A full stack web an application that allows the user to track their favorite thi
     7. Run migrations: `python manage.py migrate`
     8. Start the application: `python manage.py runserver`
     9. Run tests: `python manage.py test`
-    
-  ### Finally
+
+### Finally
+
     Go to http://localhost:8000 on your browser to view app
 
+## Documentation
+
+- The API was documented using postman:
+  [Online Documentation](https://documenter.getpostman.com/view/4912237/SVYow1PC?version=latest)
 
 ## Suggested improvement
+
     - Implement recycle bin for deleted favourites/categories
     - Implement functionality to restore deleted favourites/categories from recycle bin
     - Implement pagination when retrieving favorites
@@ -70,15 +80,18 @@ A full stack web an application that allows the user to track their favorite thi
     - Implement logging for keeping track of, and easier debugging of production issues when they occur
 
 ## How to Contribute
+
 To contribute to the project, follow the instructions below
- 1. **Fork** the repo on GitHub
- 2. **Clone** the project to your own machine
- 3. **Commit** changes to your own branch
- 4. **Push** your work back up to your fork
- 5. Submit a **Pull request** so that I can review your changes
+
+1.  **Fork** the repo on GitHub
+2.  **Clone** the project to your own machine
+3.  **Commit** changes to your own branch
+4.  **Push** your work back up to your fork
+5.  Submit a **Pull request** so that I can review your changes
 
 **NOTE**: Be sure to merge the latest from "upstream" before making a pull request!
 
 ## Licence
-* This project is licensed under the [MIT License](https://github.com/nzediegwu1/crypto-currency-tracker/blob/master/LICENSE)
-* Copyright ©  2019 Anaeze Nsoffor
+
+- This project is licensed under the [MIT License](https://github.com/nzediegwu1/crypto-currency-tracker/blob/master/LICENSE)
+- Copyright © 2019 Anaeze Nsoffor
