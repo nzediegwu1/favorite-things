@@ -1,0 +1,31 @@
+{
+  "first_name": "Anaeze",
+  "last_name": "Nsoffor",
+  "gender": "male",
+  "email": "nzediegwu1@gmail.com",
+  "phone_number": ["+2347067356519", "+2348089340095"],
+  "address": "No 1 Aminu Street, Mende, Maryland, Lagos, Nigeria",
+  "profession": "Fullstack Software Engineer",
+  "works_at": "Andela",
+  "nationality": "Nigerian",
+  "professional_skills": [
+    "Python",
+    "JavaScript",
+    "Django",
+    "Flask",
+    "Vue.js",
+    "ReactJS",
+    "Redux",
+    "NodeJS",
+    "Express",
+    "GraphQL",
+    "GraphQL-Yoga",
+    "Apollo Client"
+  ],
+  "non_work_interest": [
+    "Avengers movies",
+    "Classical music",
+    "Fine arts",
+    "Food"
+  ]
+}
