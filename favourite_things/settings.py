@@ -15,7 +15,7 @@ import os
 USERNAME = os.getenv('DB_USER')
 PASSWORD = os.getenv('DB_PASS')
 DATABASE = os.getenv('POSTGRES_DB')
-HOST = os.getenv('HOST')
+DB_HOST = os.getenv('DB_HOST')
 ENVIRONMENT = os.getenv('ENVIRONMENT')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -88,7 +88,7 @@ if ENVIRONMENT == 'production':
         'NAME': DATABASE,
         'USER': USERNAME,
         'PASSWORD': PASSWORD,
-        'HOST': HOST
+        'HOST': DB_HOST
     }
 
 DATABASES = {

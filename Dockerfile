@@ -5,7 +5,7 @@ FROM python:3
 ARG DB_USER
 ARG POSTGRES_DB
 ARG DB_PASS
-ARG HOST
+ARG DB_HOST
 
 # Set environment varibles
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -13,13 +13,11 @@ ENV PYTHONUNBUFFERED 1
 ENV DB_USER=${DB_USER}
 ENV POSTGRES_DB=${POSTGRES_DB}
 ENV DB_PASS=${DB_PASS}
-ENV HOST=${HOST}
+ENV DB_HOST=${DB_HOST}
 ENV ENVIRONMENT production
 
 # Set work directory
 WORKDIR /code
-
-EXPOSE 7000
 
 # Copy project
 COPY . /code/
@@ -28,6 +26,9 @@ COPY . /code/
 RUN pip install pipenv
 RUN pipenv install --system
 RUN python manage.py migrate
+
+EXPOSE 7000
+
 ENTRYPOINT ["python", "manage.py"]
-CMD ["runserver", "7000"]
+CMD ["runserver", "0.0.0.0:7000"]
 
