@@ -14,6 +14,8 @@ ENV DB_USER=${DB_USER}
 ENV POSTGRES_DB=${POSTGRES_DB}
 ENV DB_PASS=${DB_PASS}
 ENV HOST=${HOST}
+ENV ENVIRONMENT production
+
 # Set work directory
 WORKDIR /code
 

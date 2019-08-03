@@ -16,6 +16,7 @@ USERNAME = os.getenv('DB_USER')
 PASSWORD = os.getenv('DB_PASS')
 DATABASE = os.getenv('POSTGRES_DB')
 HOST = os.getenv('HOST')
+ENVIRONMENT = os.getenv('ENVIRONMENT')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -76,14 +77,25 @@ WSGI_APPLICATION = 'favourite_things.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 # USE OS.GETENV TO get these env variables
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+database_vars = {
+    'NAME': 'favourite_things',
+    'USER': 'admin',
+    'PASSWORD': 'password1',
+    'HOST': '127.0.0.1'
+}
+if ENVIRONMENT == 'production':
+    database_vars = {
         'NAME': DATABASE,
         'USER': USERNAME,
         'PASSWORD': PASSWORD,
-        'HOST': HOST,
-        'PORT': '5432'
+        'HOST': HOST
+    }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'PORT': '5432',
+        **database_vars
     }
 }
 
