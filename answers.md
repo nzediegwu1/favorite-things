@@ -1,13 +1,14 @@
 #### How long did you spend on the coding test below? What would you add to your solution if you had more time?
 
-1. I spent one month on the coding test and approximately 30 working hours in total. This was due to challenge combining it with my heavy responsibilities at work. Also, I am strong with ReactJS and Flask, but had to quickly ramp up on Django and Vue.js for the test
+1. I spent one month on the coding test and approximately 30 working hours in total. This was due to challenge combining it with my heavy responsibilities at work. I am strong with ReactJS and Flask, but had to quickly ramp up on Django and Vue.js for the test.
 
 2. If I had more time, I would add the following features:
-    - implement recycle bin for deleted favourites/categories
-    - implement functionality to restore deleted favourites/categories from recycle bin
+    - Implement recycle bin for deleted favourites/categories
+    - Implement functionality to restore deleted favourites/categories from recycle bin
     - Implement pagination when retrieving favorites
     - Integrate elastic search in backend and refactor implemented functionality to search favourites by category correspondingly
     - Implement logging for keeping track of, and easier debugging of production issues when they occur
+    - Implement Continuous Deployment using Circleci to automatically deploy github master branch to AWS
 
 #### What was the most useful feature that was added to the latest version of your chosen language? Please include a snippet of code that shows how you've used it.
 Answer: Python [asyncio](https://docs.python.org/3/library/asyncio.html) library for asynchronous processing in Python 3.7

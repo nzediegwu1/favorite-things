@@ -14,7 +14,8 @@ A full stack web an application that allows the user to track their favorite thi
     4. Installation and Setup
     5. Suggested improvement
     6. Documentation
-    7. How To Contribute
+    7. Deployment
+    8. How To Contribute
 
 ## Features
 
@@ -70,6 +71,18 @@ A full stack web an application that allows the user to track their favorite thi
 
 - The API was documented using postman:
   [Online Documentation](https://documenter.getpostman.com/view/4912237/SVYow1PC?version=latest)
+
+## Deployment
+
+This is done using AWS Fargate, with the following steps:
+1. Build docker image:
+ `docker build -t favourite-things --build-arg DB_USER=<DB_USER> --build-arg DB_PASS=<DB_PASS> --build-arg POSTGRES_DB=<POSTGRES_DB> --build-arg HOST=<HOST> .`
+2. Run docker image: `docker run -t favourite-things:latest`
+3. Go to `http://127.0.0.1:7000/categories` on your machine to confirm that docker app is running
+4. Create AWS container registry: `aws ecr create-repository --repository-name favourite-things --region us-east-1
+5. Push docker image to your new AWS container registry
+6. Create your fargate application in AWS dashboard
+7. View running application using `Public IP` generated in your AWS dashboard
 
 ## Suggested improvement
 
