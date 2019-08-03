@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'favourite_things.wsgi.application'
 # USE OS.GETENV TO get these env variables
 database_vars = {
     'NAME': 'favourite_things',
-    'USER': 'admin',
-    'PASSWORD': 'password1',
+    'USER': USERNAME,
+    'PASSWORD': PASSWORD,
     'HOST': '127.0.0.1'
 }
 if ENVIRONMENT == 'production':
