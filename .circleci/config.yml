@@ -23,7 +23,7 @@ jobs:
           name: Install dependencies
           command: |
             sudo pip install pipenv
-            pipenv install --dev
+            pipenv install
       - run:
           name: Set up database
           command: |
