@@ -76,13 +76,14 @@ A full stack web an application that allows the user to track their favorite thi
 
 This is done using AWS Fargate, with the following steps:
 1. Build docker image:
- `docker build -t favourite-things --build-arg DB_USER=<DB_USER> --build-arg DB_PASS=<DB_PASS> --build-arg POSTGRES_DB=<POSTGRES_DB> --build-arg DB_HOST=<DB_HOST> .`
+ `docker build -t favourite-things --build-arg SECRET_KEY=<SECRET_KEY> --build-arg DB_USER=<DB_USER> --build-arg DB_PASS=<DB_PASS> --build-arg POSTGRES_DB=<POSTGRES_DB> --build-arg DB_HOST=<DB_HOST> .`
 2. Run docker image: `docker run -p 7000:7000 -t favourite-things:latest`
 3. Go to `http://127.0.0.1:7000/categories` on your machine to confirm that docker app is running
-4. Create AWS container registry: `aws ecr create-repository --repository-name favourite-things --region us-east-1
-5. Push docker image to your new AWS container registry
-6. Create your fargate application in AWS dashboard
-7. View running application using `Public IP` generated in your AWS dashboard
+4. Create AWS container registry: `aws ecr create-repository --repository-name favourite-things --region us-east-1`
+5. Change your docker image tag to use your registry name as keyword
+6. Push docker image to your new AWS container registry
+7. Create your fargate application in AWS dashboard
+8. View running application using Public_IP generated in your AWS dashboard as follows: `<Public_IP>:7000/categories`
 
 ## Suggested improvement
 

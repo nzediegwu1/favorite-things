@@ -1,6 +1,6 @@
 #### How long did you spend on the coding test below? What would you add to your solution if you had more time?
 
-1. I spent one month on the coding test and approximately 30 working hours in total. This was due to challenge combining it with my heavy responsibilities at work. I am strong with ReactJS and Flask, but had to quickly ramp up on Django and Vue.js for the test.
+1. I spent one month on the coding test and approximately 30 working hours in total. This was due to challenge combining it with my heavy responsibilities at work. I am strong with ReactJS and Flask, but had to quickly ramp up on Django and Vue.js for the test. Deployment also caused me a lot of troubles and time. Glad to have learnt!
 
 2. If I had more time, I would add the following features:
     - Implement recycle bin for deleted favourites/categories
