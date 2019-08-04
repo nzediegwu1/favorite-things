@@ -102,3 +102,9 @@ class FavouriteAuditLog(APIView):
 class CategoryAuditLog(APIView):
     def get(self, request, category_id, format=None):
         return get_audit_log(Category, category_id, 'category')
+
+
+class LandingPage(APIView):
+    def get(self, request):
+        return Response({'message': 'Welcome to favourite things'},
+                        status=status.HTTP_200_OK)

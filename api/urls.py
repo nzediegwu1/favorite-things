@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 from .views import (FavouriteViewSet, CategoryViewSet, MetadataViewSet,
-                    FavouriteAuditLog, CategoryAuditLog)
+                    FavouriteAuditLog, CategoryAuditLog, LandingPage)
 
 router = DefaultRouter()
 
@@ -18,8 +18,10 @@ delete_metadata = MetadataViewSet.as_view({'delete': 'destroy'})
 create_metadata = MetadataViewSet.as_view({'post': 'create'})
 favourite_logs = FavouriteAuditLog.as_view()
 category_logs = CategoryAuditLog.as_view()
+get_home = LandingPage.as_view()
 
 urlpatterns = format_suffix_patterns([
+    path('', get_home),
     path('favourites', create_favourite, name='create-favourite'),
     path('favourites/<int:pk>', single_favourite, name='single-favourite'),
     path('favourites/<int:favourite_id>/logs', favourite_logs),
