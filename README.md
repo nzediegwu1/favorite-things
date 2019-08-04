@@ -5,7 +5,7 @@
 A full stack web an application that allows the user to track their favorite things.
 
 - Frontend Repo: [Click here](https://github.com/nzediegwu1/favorite-things-ui)
-- Django API Hosted on AWS Fargate: http://3.214.144.113:7000/categories
+- Django API Hosted on AWS Fargate: http://3.219.231.111:7000/categories
 
 ## Table of Contents
 
