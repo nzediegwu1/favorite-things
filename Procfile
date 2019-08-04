@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn favourite_things.wsgi
+web: python manage.py runserver "0.0.0.0:$PORT" 
