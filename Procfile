@@ -1,1 +1,1 @@
-release: python manage.py runserver
+web: gunicorn favourite_things.wsgi
