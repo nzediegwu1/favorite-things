@@ -16,7 +16,7 @@ class MetadataSerializer(serializers.ModelSerializer):
 
 
 class FavouriteMetaSerializer(serializers.ModelSerializer):
-    metadata = MetadataSerializer(many=True)
+    metadata = MetadataSerializer(many=True, read_only=False)
 
     class Meta:
         model = Favourite
