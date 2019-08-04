@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import django_heroku
+# import django_heroku
 
 USERNAME = os.getenv('DB_USER')
 PASSWORD = os.getenv('DB_PASS')
@@ -101,7 +101,7 @@ DATABASES = {
         **database_vars
     }
 }
-DATABASE_URL = f'postgres://{USERNAME}:{PASSWORD}.{DB_HOST}:5432/{DATABASE}'
+# DATABASE_URL = f'postgres://{USERNAME}:{PASSWORD}.{DB_HOST}:5432/{DATABASE}'
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -151,5 +151,5 @@ REST_FRAMEWORK = {
 }
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 # APPEND_SLASH = True
