@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4bf2fb615cf0df6789f4b8201081e56ba92bbe316a64b2a5ccfdd5ff229ed950"
+            "sha256": "adfaecadd41a616bd6939ff9ba4767f4b01778bf53cb7e16799d63d7c6dc2c5e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -98,6 +98,13 @@
             "index": "pypi",
             "version": "==1.8.2"
         },
+        "dj-database-url": {
+            "hashes": [
+                "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163",
+                "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"
+            ],
+            "version": "==0.5.0"
+        },
         "django": {
             "hashes": [
                 "sha256:16a5d54411599780ac9dfe3b9b38f90f785c51259a584e0b24b6f14a7f69aae8",
@@ -113,6 +120,14 @@
             ],
             "index": "pypi",
             "version": "==3.0.2"
+        },
+        "django-heroku": {
+            "hashes": [
+                "sha256:2bc690aab89eedbe01311752320a9a12e7548e3b0ed102681acc5736a41a4762",
+                "sha256:6af4bc3ae4a9b55eaad6dbe5164918982d2762661aebc9f83d9fa49f6009514e"
+            ],
+            "index": "pypi",
+            "version": "==0.3.1"
         },
         "djangorestframework": {
             "hashes": [
@@ -135,6 +150,14 @@
                 "sha256:7a4bd47eaf6596e1295ecb11361139febe29b084a87bf005bf899f9a42edc3c6"
             ],
             "version": "==0.14"
+        },
+        "gunicorn": {
+            "hashes": [
+                "sha256:aa8e0b40b4157b36a5df5e599f45c9c76d6af43845ba3b3b0efe2c70473c2471",
+                "sha256:fa2662097c66f920f53f70621c6c58ca4a3c4d3434205e608e121b5b3b71f4f3"
+            ],
+            "index": "pypi",
+            "version": "==19.9.0"
         },
         "idna": {
             "hashes": [
@@ -256,6 +279,13 @@
             ],
             "markers": "python_version >= '3.4'",
             "version": "==1.25.3"
+        },
+        "whitenoise": {
+            "hashes": [
+                "sha256:59d880d25d0e90bcc6554fe0504a11195bd2e59b3d690b6fb42a8040d4e67ef5",
+                "sha256:c9b7c47fdc1dba4d37bf2787a01a844dc7a521e174fcd22a2d429e0be65e1782"
+            ],
+            "version": "==4.1.3"
         }
     },
     "develop": {
