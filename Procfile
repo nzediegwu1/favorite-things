@@ -1,2 +1,2 @@
-web: python manage.py migrate
-release: gunicorn favourite_things.wsgi
+release: python manage.py migrate
+web: gunicorn favourite_things.wsgi
